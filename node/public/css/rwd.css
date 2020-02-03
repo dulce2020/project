@@ -1,0 +1,249 @@
+body{
+margin: 0;
+font: 18px "Microsoft JhengHei";
+}
+
+img{
+width: 100%;
+height: auto;
+}
+
+#p1{
+	width:50%;
+}
+@media (max-width: 1000px) {
+#p1{
+	width:100%;
+}
+}
+#p2{
+	width:50%;
+}
+@media (max-width: 1000px) {
+#p2{
+	width:100%;
+}
+}
+#title{
+	width: 96%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 0.4em;
+	padding-bottom: 0.2em;
+	text-align: center;
+	color: Green;
+	font-size: 30px;
+	font-family : "標楷體", sans-serif;
+}
+@media (max-width: 1000px) {
+#title{
+	width: 96%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 0.4em;
+	padding-bottom: 0.2em;
+	text-align: center;
+	color: Green;
+	font-size: 30px;
+	font-family : "標楷體", sans-serif;
+}
+}
+#Time{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+}
+hr{
+	width: 80%;
+}
+}#chart1{
+}.c3-axis-y-label, .c3-axis-y2-label{
+font-family : "標楷體", sans-serif;
+font-size : 20px;
+}#chart1 .c3-line-pm2.5, #chart1 .c3-line-pm10{
+stroke-width: 2.5px;
+}#chart2{
+}.c3-axis-y-label, .c3-axis-y2-label{
+font-family : "Times New Roman", sans-serif;
+font-size : 20px;
+}#chart2 .c3-line-CO, #chart1 .c3-line-NH4{
+stroke-width: 2.5px;
+}#chart3{
+width:900px;
+height:397px;
+margin:auto;
+}
+@media (max-width: 1000px) {
+  #chart3{
+	width:300px;
+	height:270px;
+	margin:auto;
+  }
+}
+@media (max-width: 350px) {
+  #chart3{
+	width:200px;
+	height:200px;
+	margin:auto;
+  }
+}
+
+#chart4{
+margin-left: 4%;
+margin-right: 2.5%;
+}
+
+#btn1{
+border: 1px solid #000;
+color:#fff;
+width:100%;
+height:70px;
+border-radius: 4px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+margin-top: 10px;
+margin-bottom: 0px;
+font-size: 25px;
+background:#003377
+}#btn2{
+border: 1px solid #000;
+color:#fff;
+width:100%;
+height:70px;
+border-radius: 4px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+margin-top: 10px;
+margin-bottom: 0px;
+font-size: 25px;
+background:#003377
+}
+
+@media (max-width: 1000px) {
+
+#btn1{
+	border: 1px solid #000;
+	color:#fff;
+	width:100%;
+	height:50px;
+	border-radius: 4px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	margin-top: 10px;
+	margin-bottom: 0px;
+	font-size: 20px;
+	background:#003377
+	font-family : "標楷體", sans-serif;
+}
+
+#btn2{
+	border: 1px solid #000;
+	color:#fff;
+	width:100%;
+	height:50px;
+	border-radius: 4px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+	margin-top: 10px;
+	margin-bottom: 0px;
+	font-size: 20px;
+	background:#003377
+	font-family : "標楷體", sans-serif;
+}
+}
+#bgtit{
+margin-top: 10px;
+color: #003377;
+font-size: 26px;
+font-family : "標楷體", sans-serif;
+}
+@media (max-width: 720px) {
+#bgtit{
+margin-top: 10px;
+color: #003377;
+font-size: 20px;
+font-family : "標楷體", sans-serif;
+}
+}
+
+#ch1b{
+border: 2px solid #000;
+}
+@media (max-width: 721px) {
+#qqpr{
+border:0;
+width:600px;
+height:360px;
+margin-left: 0%;
+}
+}
+@media (min-width: 1000px) {
+  #qqpr{
+margin-left:14%;
+border:0;
+width:720px;
+height:360px;
+  }
+}
+#form{
+width:190px; 
+height:35px;
+line-height: 55px;
+font-size: 1.5rem;
+background-color: #e3e3d8;
+border: 1px solid #000;
+color: black;
+border-radius: 4px;
+}
+@media (max-width: 1000px) {
+  #form{
+width:190px; 
+height:35px;
+line-height: 55px;
+font-size: 20px;
+background-color: #e3e3d8;
+border: 1px solid #000;
+color: black;
+border-radius: 4px;
+  }
+}
+
+
+#aa{
+padding-bottom: 1em;
+}#bb{
+padding-bottom: 1em;
+}#dtb{
+height:432px;
+}#ooo{
+padding-bottom: 1em;
+}#ch{
+margin-left:7px;
+margin-top:2px;
+background-color: #e3e3d8;
+border: 1px solid #000;
+border-radius: 4px;
+height:34px;
+}#hhh{
+font-size: 25px;
+margin-left: 15%;
+font-family : "標楷體", sans-serif;
+}
+@media (max-width: 1000px) {
+  #hhh{
+font-size: 10px;
+margin-left: 3%;
+font-family : "標楷體", sans-serif;
+  }
+}
+
+.data{
+position: relative;
+padding-bottom: 75%;
+overflow: hidden;
+-webkit-overflow-scrolling: touch;  
+overflow-y: scroll;
+overflow-x: scroll; 
+}.data iframe{
+position: absolute;
+top: 0;
+left: 0;
+width: 100% !important;
+height: 100% !important;
+}

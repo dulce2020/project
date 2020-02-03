@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<title>PM2.5手機APP網頁即時監測與控制</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="UTF-8">
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/js/c3.min.js"></script>
+		<script src="/js/d3.v3.min.js"></script>
+		<script src="/js/justgage.js"></script>
+		<script src="/js/raphael-2.1.4.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/c3.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/c3.css">
+		<link rel="stylesheet" type="text/css" href="/css/rwd.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  	<script  language="JavaScript">
+	function Time(Ai){					//時間Function
+				let x = new Date();				//宣告一個新的時間物件
+				let xH = x.getHours();			//獲取目前小時
+				let xM = x.getMinutes();		
+				let xS = x.getSeconds();		
+				xH = (xH < 10) ? ("0" + xH) : xH;//如果小時小於10前面加上一個0(4 => 04)
+				xM = (xM < 10) ? ("0" + xM) : xM;
+				xS = (xS < 10) ? ("0" + xS) : xS;
+				
+				if (Ai == "1"){
+					return xH + ":" + xM + ":" + xS;		//輸出圖形資料格式
+				}
+				else{
+					let All = x.getFullYear()+" 年 "+(x.getMonth()+1)+" 月 "+x.getDate()+" 日 ";
+					return All+xH+" 時 "+xM+" 分 "+xS+" 秒";//輸出網頁資料格式
+				}
+			}
+			
+			
+			function line(i){
+			switch (i) {
+					case 1:$.post('https://maker.ifttt.com/trigger/line/with/key/vEQJQvj5vaYd4GOolPq8j',{value1:'二氧化碳數值:'+CO2A+'ppm'+'<br>'+'濃度過高，請打開門窗讓室內通風,並請留意室內空氣品質是否須開啟空氣清淨機'});break;
+					case 2:$.post('https://maker.ifttt.com/trigger/line/with/key/vEQJQvj5vaYd4GOolPq8j',{value1:'甲烷數值:'+CH4A+'ppm'+'<br>'+'疑似瓦斯外洩!請勿點火，迅速打開門窗，並檢查瓦斯設備'});break;
+					case 3:$.post('https://maker.ifttt.com/trigger/line/with/key/vEQJQvj5vaYd4GOolPq8j',{value1:'PM2.5濃度:'+pmat1+'μg/m3'+'<br>'+'PM2.5濃度超標，建議開起空氣濾淨器'+'<br>'+'前往控制網頁:'+'http://192.192.2.41:3000'});break;
+					case 4:$.post('https://maker.ifttt.com/trigger/line/with/key/vEQJQvj5vaYd4GOolPq8j',{value1:'PM10濃度:'+pmat2+'μg/m3'+'<br>'+'PM10濃度超標，建議開起空氣濾淨器'+'<br>'+'前往控制網頁:'+'http://192.192.2.41:3000/indexx.html'});
+					case 5:$.post('https://maker.ifttt.com/trigger/line/with/key/vEQJQvj5vaYd4GOolPq8j',{value1:'一氧化碳數值:'+COA+'ppm'+'<br>'+'一氧化碳濃度過高!請迅速打開門窗，並檢查瓦斯及熱水器設備'});break;
+					}
+			}
+			function btn(z){
+			switch (z) {
+					case 1:Socketc(0);break;
+					case 2:Socketc(1);
+					}
+			}
+			function reset(){
+					 //document.getElementById('GOOG').contentWindow.location.reload(true);
+					 //document.getElementById('qqpr').contentWindow.location.replace(new_url);			 
+					 //https://stackoverflow.com/questions/2064850/how-to-refresh-an-iframe-using-javascript
+					 var iframe = document.getElementById('qqpr');
+					 iframe.src = iframe.src;
+			}
+	</script>
+	
+  </head>
+  <body>
+	<div id="title">室內空氣品質網頁視覺化與即時監控</div>
+			<center>
+				<div id="Time"></div>
+				
+			</center>
+			
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-6"id='aa'><center><input type="button" onclick="btn(2)" value="開啟空氣濾淨器" id="btn1"></center></div>
+					<div class="col-6"id='bb'><center><input type="button" onclick="btn(1)" value="關閉空氣濾淨器" id="btn2"><div class="col-6"id='bb'><center><!--<input type="button" onclick="kl(3);" value="關閉空氣濾淨器" id="btn2">--></center></div>
+				</div>
+			</div>
+		
+			
+			<div class="container-fluid" id="ooo">
+				<div class="row">					
+					<div class="col-12" >					
+						<div id="ch1b">
+						<div id="bgtit"><center>PM2.5與PM10圖表</center></div>
+						<center><div id="chart1"></div></center>
+						</div>
+					</div>
+					<div class="col-12">
+						<div id="ch1b">					
+							<div id="bgtit"><center>CO與CH4圖表</center></div>
+							<center><div id="chart2"></div></center>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<div id="ch1b">	
+							<div id="bgtit"><center>CO2濃度圖表</center></div>
+							<div id="chart3"></div>
+						</div>
+					</div>
+					<div class="col">
+						<div id="ch1b">	
+							<div id="dtb">
+							<div id="bgtit"><center>查詢資料數據</center></div>
+							<div class="row" id="hhh">
+								<div class="col-2.7">
+								<form> 
+									<select id="form" onchange="worrdata()">
+										<option value="6">所有資料</option>
+					　					<option value="1">pm2.5超標資料</option>
+										<option value="2">pm10超標資料</option>
+										<option value="3">CO2超標資料</option>
+										<option value="4">CO超標資料</option>
+										<option value="5">CH4超標資料</option>
+									</select>				
+								</form>
+								</div>
+							</div>
+							<iframe src="http://192.168.0.100:3000/data"id="qqpr"></iframe>			
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+    <script>
+			
+			//------------表1--------------//
+				var chart1 = c3.generate({
+				bindto : "#chart1",
+				padding: { right: 20 },
+				data:{
+					type:"line",
+					x:"日期",					//設定名稱
+					xFormat:"%H:%M:%S",			//設定資料格式
+					columns:[
+						["日期", Time(1)],		//設定名稱(與x相同)，給予資料(與xFormat相同)
+						["pm2.5",50],
+						["pm10",50]
+						],
+					axes:{
+						"顆粒濃度" : "y",
+						},
+					colors:{
+						"pm2.5" : "#ff8433",	//設定顏色
+						"pm10" : "#3366ff"	
+					}},
+				axis:{
+					x:{
+						type:"timeseries",
+						tick:{
+						rotate:30, 
+						fit:true,
+						format:"%H:%M:%S",
+						culling: true,
+						culling: {
+                        max: window.innerWidth > 500 ? 8 : 5
+							}
+						}
+						},
+						//rotate轉30度(0≦rotate≦360, 311≦rotate看不到)
+					y:{
+						label:{text:'顆粒濃度', position:'outer-middle'},//讓溫度顯示在外面
+						min:5, max:70,
+						padding:{top:0.1, bottom:0.1, unit:'ratio'},
+						//y軸頂部和底部各留5%空間，加入unit:'ratio' = %
+						tick:{format : function(d){return d+"μg/m3";}}},
+					y2:{
+						show : false,			//讓y2顯示出來(預設False)
+					}
+				},
+					onresized: function () {
+						window.innerWidth > 500 ? chart.internal.config.axis_x_tick_culling_max = 8 : chart.internal.config.axis_x_tick_culling_max = 5;
+				}				
+			});
+			//--------------表2--------------//
+			var chart2 = c3.generate({
+				bindto : "#chart2",
+				padding: { right: 20 },
+				data:{
+					type:"line",
+					x:"日期",
+					xFormat:"%H:%M:%S",
+					columns:[
+						["日期", Time(1)],
+						["CO",20],
+						["CH4",20]
+						],
+					axes:{
+						"ppm" : "y",
+						},
+					colors:{
+						"CO" : "#FF00FF",
+						"CH4" : "#444444"
+					}},
+				axis:{
+					x:{
+						type:"timeseries",
+						tick:{
+						rotate:30, 
+						fit:true,
+						format:"%H:%M:%S",
+						culling: true,
+						culling: {
+                        max: window.innerWidth > 500 ? 8 : 5
+							}
+						}},
+					y:{
+						label:{text:'PPM', position:'outer-middle'},
+						min:5, max:1500,
+						padding:{top:0.1, bottom:0.1, unit:'ratio'},
+						tick:{format : function(d){return d+"ppm";}}},
+					y2:{
+						show : false,
+					}
+				},
+				onresized: function () {
+						window.innerWidth > 500 ? chart.internal.config.axis_x_tick_culling_max = 8 : chart.internal.config.axis_x_tick_culling_max = 5;
+				}	
+			});
+			//--------------表3--------------//
+		var chart3 = new JustGage({
+				id : "chart3",
+				value : 0,
+				symbol : "ppm",
+				pointer : true,	//指針
+				gaugeWidthScale:0.8,
+				max:3000,
+				min:0,
+				color:{
+					pattern:['#00ff00','#ffff00','#ff0000'],
+					threshold:{
+						unite:'value',
+						max:100000,
+						values:[500,1000,3000]
+					}
+				},
+					counter:true
+			});
+	//---------------------------------//		
+	
+      var socket = io.connect();
+      var pmat1=0,pmat2=0,CO2A=0,COA=0,CH4A=0,dbdata=0,tckCount=0,totalTck=4,worco2="",worch4="",worpma="",worpmb="";
+      
+	socket.on("pm", function (data){	
+		pmat1 = data.pm25;
+        pmat2 = data.pm10;
+		CO2A  = data.CO2S;
+		COA   = data.COS;
+		CH4A  = data.CH4S;	
+		document.getElementById('Time').innerHTML=Time(2);
+		});	 
+	
+	socket.on("WORR" ,function (data){
+		if (data.worrco2==1){line(1)};
+		if (data.worrch4==2){line(2)};
+		if (data.worrpma==3){line(3)};
+		if (data.worrpmb==4){line(4)};
+		if (data.worrco==5){line(5)};
+	});
+		
+		function Socketc(c){
+			 socket.emit('xyz', {'c' : c});
+			 if(c==0){alert("空氣清淨機已關閉");}else{alert("空氣清淨機已開啟");}
+			 };
+			 
+		function worrdata() {  
+				  var formc = document.getElementById("form");
+				  var form = formc.value;
+				  
+				  socket.emit('chwordata',{'chdata':form.toString()});
+				  reset();
+				  //alert(form);
+			};	
+  
+	  
+	setInterval(function(){
+	  
+				chart1.flow({		// * * 圖表 * * //
+				columns:[
+					["日期", Time(1)],			//接收目前時間
+					["pm2.5", pmat1],			//接收資料
+					["pm10", pmat2]			
+				],
+				length: (tckCount < totalTck) ? 0 : 1,	//移動一格
+					done: function(){
+						if(tckCount<totalTck) ++tckCount;
+					}
+				});					
+				chart2.flow({		// * * 圖表2 * * //
+				columns:[
+					["日期", Time(1)],			
+					["CO", COA],			
+					["CH4", CH4A]			
+				],
+				length: (tckCount < totalTck) ? 0 : 1,	
+					done: function(){
+						if(tckCount<totalTck) ++tckCount;
+					}
+				});				
+				chart3.refresh(CO2A);
+				}, 1000);
+	
+	</script>
+  </body>
+</html>

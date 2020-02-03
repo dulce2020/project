@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">	
+@media (min-width: 720px) {
+		body {
+				font-family:"微軟正黑體";
+			}
+			#main {
+				width:380px;
+				text-align: center;
+			}
+			#sizz{
+				font-size:20px;
+			}
+			table {
+				width:100%;
+				border: 2px solid #126466;
+				border-spacing: 0;
+			}
+			th {
+				text-align: center;
+				background-color:#54B86C;
+				color:#FFF;
+				padding:4px;
+			}
+			td {
+				text-align: center;
+				padding-left:4px;
+				border-bottom: 2px solid #ddd;
+			}
+			a.prev {
+				float:left;
+				text-decoration:none
+			}
+			a.next {
+				float:right;
+				text-decoration:none
+			}
+			#tit {
+				width: 96%;
+				margin-left: auto;
+				margin-right: auto;
+				padding-top: 0.4em;
+				padding-bottom: 0.2em;
+				text-align: center;
+				color: Green;
+				font-size: 26px;
+			}
+				 .scroll_table_ot {margin: 2.5px auto;line-height: 8px; width: 711px; font-size: 8px; } 
+				 .scroll_table_ot 
+				 .scroll { max-height:300px; border: 1px solid #6a6a6a; border-top: 0; overflow-y: auto; border-right: 0; } 
+				 .scroll_table_ot table { line-height:20px;width: 5%; table-layout: fixed; border-collapse: collapse; border-spacing: 0; } 
+				 .scroll_table_ot th, 
+				 .scroll_table_ot td { width: 99px; padding: 7px; border: 1px solid #6a6a6a; font-size:15px; } 
+				 .scroll_table_ot th { font-weight: bold; } 
+}
+
+@media (max-width: 700px) {
+			body {
+				font-family:"微軟正黑體";
+				
+			}
+			#main {
+				width:380px;
+				text-align: center;
+			}
+			#sizz{
+				font-size:10px;
+			}
+			table {
+				width:100%;
+				border: 2px solid #126466;
+				border-spacing: 0;
+			}
+			th {
+				text-align: center;
+				background-color:#54B86C;
+				color:#FFF;
+			}
+			td {
+				text-align: center;
+				padding-left:4px;
+				border-bottom: 2px solid #ddd;
+			}
+			.scroll_table_ot {margin: 1px auto;line-height: 8px; width: 700px; } 
+			.scroll_table_ot 
+			.scroll { max-height:300px; border: 1px solid #6a6a6a; border-top: 0; overflow-y: auto; border-right: 0; } 
+			.scroll_table_ot table { line-height:13px;width: 5%; table-layout: fixed; border-collapse: collapse; border-spacing: 0; } 
+			.scroll_table_ot th, 
+			.scroll_table_ot td { width: 40px; padding: 2px; border: 1px solid #6a6a6a; font-size:9px; } 
+			.scroll_table_ot th { font-weight: bold; } 
+}
+		</style>	
+	</head>	
+	<body>
+	<div id="main">
+	
+	<div class="scroll_table_ot">
+	<table>
+	<thead>
+		<tr>
+		  <th><font id="sizz">pm2.5</font></th>
+		  <th><font id="sizz">pm10</font></th>
+		  <th><font id="sizz">CO</font><font size="2">2</font></th>
+		  <th><font id="sizz">CO</font></th>
+		  <th><font id="sizz">CH</font><font size="2">4</font></th>
+		  <th><font id="sizz">時間</font></th>
+		</tr>
+	</thead>
+	</table>
+	<div class="scroll scrollbarStyle">
+	<table class ="order-table">
+		<tbody>
+		<%
+		   docs.forEach( function(d) {
+		%>
+		<tr>
+		  <td><%= d['pm10'] %><font size="1">μg/m3<font></td>
+		  <td><%= d['pm25'] %><font size="1">μg/m3<font></td>
+		  <td><%= d['CO2'] %><font size="1">ppm<font></td>
+		  <td><%= d['CO'] %><font size="1">ppm<font></td>
+		  <td><%= d['CH4'] %><font size="1">ppm<font></td>
+		  <td><%= d['Time'] %></td>
+		</tr>
+		<% }); %>
+		</tbody>
+	</table>
+	</div>
+	</div>
+	<script>
+		
+	</script>
+	</body>
+</html>
